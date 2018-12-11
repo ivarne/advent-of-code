@@ -26,25 +26,28 @@ for (let x = 1; x <= 300; x++) {
 }
 maxX = 0;
 maxY = 0;
+maxSize = 0;
 maxPower = -Infinity;
-for (let x = 0; x < 300 - 2; x++) {
-  for (let y = 0; y < 300 - 2; y++) {
-    const power = 
-        grid[x][y] +
-        grid[x+1][y] +
-        grid[x+2][y] +
-        grid[x][y+1] +
-        grid[x+1][y+1] +
-        grid[x+2][y+1] +
-        grid[x][y+2] +
-        grid[x+1][y+2] +
-        grid[x+2][y+2] 
-    if(power > maxPower){
-        maxX = x+1;
-        maxY = y+1;
+for (let size = 1; size <= 300; size++) {
+  for (let x = 0; x <= 300 - size; x++) {
+    for (let y = 0; y <= 300 - size; y++) {
+      let power = 0;
+      for (x_offset = 0; x_offset < size; x_offset++) {
+        for (y_offset = 0; y_offset < size; y_offset++) {
+          power += grid[x+x_offset][y+y_offset];
+        }
+      }
+      if (power > maxPower) {
+        maxX = x + 1;
+        maxY = y + 1;
+        maxSize = size;
         maxPower = power;
+      }
     }
   }
+  console.log(size);
 }
-console.log(grid[3][5])
-console.log(maxX, maxY, maxPower)
+// console.log(grid[3][5]);
+// console.log(maxX, maxY, maxPower);
+
+console.log("maxX:", maxX, " maxY:", maxY, " maxPower:", maxPower," maxSize:", maxSize);
